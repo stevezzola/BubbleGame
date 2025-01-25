@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,15 +12,16 @@ public class BubbleGroup : MonoBehaviour
     public Sprite sprite1;
     public Sprite sprite2;
 
+    private CategoryEnum.Category category;
     private bool dragging = false;
     private Vector3 offset;
-    public List<GameObject> bubbleItemObjects;
+    private List<GameObject> bubbleItemObjects;
     private int nItems = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -44,6 +46,10 @@ public class BubbleGroup : MonoBehaviour
 
     public void addItem(GameObject bubbleItemObject)
     {
+        if (nItems == 0)
+        {
+            bubbleItemObjects = new List<GameObject>();
+        }
         if (nItems < 4)
         {
             bubbleItemObjects.Add(bubbleItemObject);
@@ -51,6 +57,10 @@ public class BubbleGroup : MonoBehaviour
             nItems += 1;
         }
         readjustItems();
+        if (nItems == 1)
+        {
+            category = bubbleItemObject.GetComponent<BubbleItem>().category;
+        }
         if (nItems == 4)
         {
             Debug.Log("Bubble completed!");
@@ -68,13 +78,26 @@ public class BubbleGroup : MonoBehaviour
             {
                 foreach (GameObject child in bubbleItemObjects)
                 {
-                    bubbleItemObject.GetComponent<BubbleItem>().setBubbleGroupParent(null);
+                    child.GetComponent<BubbleItem>().setBubbleGroupParent(null);
                     nItems -= 1;
                 }
                 Destroy(gameObject);
             }
-            readjustItems();
+            else
+            {
+                readjustItems();
+            }  
         }
+    }
+
+    public void removeAllItems()
+    {
+        foreach (GameObject child in bubbleItemObjects)
+        {
+            child.GetComponent<BubbleItem>().setBubbleGroupParent(null);
+            nItems -= 1;
+        }
+        Destroy(gameObject);
     }
 
     public void readjustItems()
@@ -103,5 +126,10 @@ public class BubbleGroup : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().sprite = sprite2;
             gameObject.GetComponent<CircleCollider2D>().radius = 2.3f;
         }
+    }
+
+    public CategoryEnum.Category getCategory()
+    {
+        return category;
     }
 }

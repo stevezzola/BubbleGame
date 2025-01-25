@@ -5,8 +5,25 @@ public class CategoryEnum : MonoBehaviour
 {
     public enum Category {
         None,
-        Disney_Movie,
-        Best_Warm,
-        Looney_Tunes
+        OnABeach,
+        YouCanInflate,
+        YouCanRecycle,
+        Shiny,
+        InAnArtStudio,
+        ThatMakeNoise,
+        ThatGoInABottle,
+        ThatAreSticky,
+        Bitter,
+        Acid,
+        DisneyMovies,
+        NurseryRhymes,
+        BestWarm,
+        BasicShapes,
+        InAMagiciansBag,
+        ThatCanCurve,
+        SoftAndCuddly,
+        YouCanSculpt,
+        MovieWeapons,
+        LooneyTunesWeapons,
     };
 }

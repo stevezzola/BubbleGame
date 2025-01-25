@@ -65,7 +65,7 @@ public class BubbleItem : MonoBehaviour
             }
             if (otherGroupObjects.Count > 0 && !hasBubbleGroupParent())
             {
-                if (category == otherItemObjects.Last().GetComponent<BubbleItem>().category)
+                if (category == otherGroupObjects.Last().GetComponent<BubbleGroup>().getCategory())
                 {
                     // Add item to existing bubble
                     Debug.Log("Adding to bubble!");
@@ -74,8 +74,10 @@ public class BubbleItem : MonoBehaviour
                 }
                 else
                 {
-                    // Reject bubble creation
+                    // Wrong item - pop bubble!
                     Debug.Log("Rejected!");
+                    BubbleGroup bubbleGroup = otherGroupObjects.Last().GetComponent<BubbleGroup>();
+                    bubbleGroup.removeAllItems();
                 }
             }
         }
