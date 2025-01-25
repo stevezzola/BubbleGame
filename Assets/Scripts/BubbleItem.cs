@@ -8,6 +8,7 @@ using System.Linq;
 public class BubbleItem : MonoBehaviour
 {
     public GameObject bubbleGroupPrefab;
+    public CategoryEnum.Category category;
 
     private bool dragging = false;
     private Vector3 offset;
@@ -38,26 +39,44 @@ public class BubbleItem : MonoBehaviour
         float d = (endPosition - startPosition).magnitude;
         if (otherItemObjects.Count > 0 && !hasBubbleGroupParent() && !otherItemObjects.Last().GetComponent<BubbleItem>().hasBubbleGroupParent())
         {
-            Debug.Log("Adding");
-            // Creating a new bubble with two items
-            GameObject bubbleGroupObject = Instantiate(bubbleGroupPrefab, transform.position, Quaternion.identity);
-            BubbleGroup bubbleGroup = bubbleGroupObject.GetComponent<BubbleGroup>();
-            bubbleGroup.addItem(gameObject);
-            bubbleGroup.addItem(otherItemObjects.Last());
+            if (category == otherItemObjects.Last().GetComponent<BubbleItem>().category)
+            {
+                // Create a new bubble with two items
+                Debug.Log("Adding");
+                GameObject bubbleGroupObject = Instantiate(bubbleGroupPrefab, transform.position, Quaternion.identity);
+                BubbleGroup bubbleGroup = bubbleGroupObject.GetComponent<BubbleGroup>();
+                bubbleGroup.addItem(gameObject);
+                bubbleGroup.addItem(otherItemObjects.Last());
+            }
+            else
+            {
+                // Reject bubble creation
+                Debug.Log("Rejected!");
+            }
         }
         else
         {
             if (hasBubbleGroupParent() && d > bubbleGroupParent.GetComponent<CircleCollider2D>().radius)
             {
-                Debug.Log("Removing");
+                // Remove item from bubble
+                Debug.Log("Removing from bubble");
                 BubbleGroup bubbleGroup = bubbleGroupParent.GetComponent<BubbleGroup>();
                 bubbleGroup.removeItem(gameObject);
             }
             if (otherGroupObjects.Count > 0 && !hasBubbleGroupParent())
             {
-                Debug.Log("Adding to bubble!");
-                BubbleGroup bubbleGroup = otherGroupObjects.Last().GetComponent<BubbleGroup>();
-                bubbleGroup.addItem(gameObject);
+                if (category == otherItemObjects.Last().GetComponent<BubbleItem>().category)
+                {
+                    // Add item to existing bubble
+                    Debug.Log("Adding to bubble!");
+                    BubbleGroup bubbleGroup = otherGroupObjects.Last().GetComponent<BubbleGroup>();
+                    bubbleGroup.addItem(gameObject);
+                }
+                else
+                {
+                    // Reject bubble creation
+                    Debug.Log("Rejected!");
+                }
             }
         }
     }

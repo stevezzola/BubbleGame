@@ -48,32 +48,27 @@ public class BubbleGroup : MonoBehaviour
         {
             bubbleItemObjects.Add(bubbleItemObject);
             bubbleItemObject.GetComponent<BubbleItem>().setBubbleGroupParent(gameObject);
-            //RelativeJoint2D joint = bubbleItemObject.GetComponent<RelativeJoint2D>();
-            //joint.connectedBody = gameObject.GetComponent<Rigidbody2D>();
-            //joint.autoConfigureOffset = false;
             nItems += 1;
         }
         readjustItems();
+        if (nItems == 4)
+        {
+            Debug.Log("Bubble completed!");
+        }
     }
 
     public void removeItem(GameObject bubbleItemObject)
     {
-        if (nItems > 0)
+        if (nItems > 0 && nItems < 4)
         {
             bubbleItemObject.GetComponent<BubbleItem>().setBubbleGroupParent(null);
             bubbleItemObjects.Remove(bubbleItemObject);
-            //RelativeJoint2D joint = bubbleItemObject.GetComponent<RelativeJoint2D>();
-            //joint.autoConfigureOffset = true;
-            //joint.connectedBody = null;
             nItems -= 1;
             if (nItems < 2)
             {
                 foreach (GameObject child in bubbleItemObjects)
                 {
                     bubbleItemObject.GetComponent<BubbleItem>().setBubbleGroupParent(null);
-                    //RelativeJoint2D childJoint = bubbleItemObject.GetComponent<RelativeJoint2D>();
-                    //childJoint.connectedBody = null;
-                    //childJoint.autoConfigureOffset = true;
                     nItems -= 1;
                 }
                 Destroy(gameObject);
