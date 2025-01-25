@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7900382430128608173}
   - component: {fileID: 2589537104742264491}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Item
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,7 +176,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!254 &2589537104742264491
 RelativeJoint2D:
   m_ObjectHideFlags: 0

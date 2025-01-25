@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Item
   - Group
+  - Bubble
   layers:
   - Default
   - TransparentFX

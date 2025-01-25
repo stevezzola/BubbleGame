@@ -1,5 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
+using System.Linq;
 
 
 public class BubbleItem : MonoBehaviour
@@ -8,15 +11,16 @@ public class BubbleItem : MonoBehaviour
 
     private bool dragging = false;
     private Vector3 offset;
-    private GameObject otherItemObject;
+    private List<GameObject> otherItemObjects;
+    private List<GameObject> otherGroupObjects;
     private GameObject bubbleGroupParent = null;
-    private bool withinParent = true;
     private Vector2 startPosition;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        otherItemObjects = new List<GameObject>();
+        otherGroupObjects = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -28,71 +32,59 @@ public class BubbleItem : MonoBehaviour
         }   
     }
 
-    private void OnMouseDown()
+    private void mouseUpCheck()
     {
-        offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        startPosition = transform.position;
-        dragging = true;
-    }
-
-    private void OnMouseUp()
-    {
-        dragging = false;
         Vector2 endPosition = transform.position;
         float d = (endPosition - startPosition).magnitude;
-        if (otherItemObject != null && otherItemObject.CompareTag("Item") && !hasBubbleGroupParent() && !otherItemObject.GetComponent<BubbleItem>().hasBubbleGroupParent())
+        if (otherItemObjects.Count > 0 && !hasBubbleGroupParent() && !otherItemObjects.Last().GetComponent<BubbleItem>().hasBubbleGroupParent())
         {
             Debug.Log("Adding");
             // Creating a new bubble with two items
             GameObject bubbleGroupObject = Instantiate(bubbleGroupPrefab, transform.position, Quaternion.identity);
             BubbleGroup bubbleGroup = bubbleGroupObject.GetComponent<BubbleGroup>();
             bubbleGroup.addItem(gameObject);
-            bubbleGroup.addItem(otherItemObject);
-            /*
-            RelativeJoint2D joint = gameObject.GetComponent<RelativeJoint2D>();
-            joint.connectedBody = bubbleGroupObject.GetComponent<Rigidbody2D>();
-            joint.autoConfigureOffset = false;
-            joint.linearOffset = new Vector2(1.0f, 0.0f);
-
-            RelativeJoint2D otherJoint = otherItemObject.GetComponent<RelativeJoint2D>();
-            otherJoint.connectedBody = bubbleGroupObject.GetComponent<Rigidbody2D>();
-            otherJoint.autoConfigureOffset = false;
-            otherJoint.linearOffset = new Vector2(-1.0f, 0.0f);
-            
-            setBubbleGroupParent(bubbleGroupObject);
-            otherItemObject.GetComponent<BubbleItem>().setBubbleGroupParent(bubbleGroupObject);
-            */
+            bubbleGroup.addItem(otherItemObjects.Last());
         }
-        else if (hasBubbleGroupParent() && d > 1.5)
+        else
         {
-            Debug.Log("Removing");
-            BubbleGroup bubbleGroup = bubbleGroupParent.GetComponent<BubbleGroup>();
-            bubbleGroup.removeItem(gameObject);
+            if (hasBubbleGroupParent() && d > bubbleGroupParent.GetComponent<CircleCollider2D>().radius)
+            {
+                Debug.Log("Removing");
+                BubbleGroup bubbleGroup = bubbleGroupParent.GetComponent<BubbleGroup>();
+                bubbleGroup.removeItem(gameObject);
+            }
+            if (otherGroupObjects.Count > 0 && !hasBubbleGroupParent())
+            {
+                Debug.Log("Adding to bubble!");
+                BubbleGroup bubbleGroup = otherGroupObjects.Last().GetComponent<BubbleGroup>();
+                bubbleGroup.addItem(gameObject);
+            }
         }
-        else if (otherItemObject != null && otherItemObject.CompareTag("Group") && !hasBubbleGroupParent())
-        {
-            Debug.Log("Adding to bubble!");
-            BubbleGroup bubbleGroup = otherItemObject.GetComponent<BubbleGroup>();
-            bubbleGroup.addItem(gameObject);
-        } 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        otherItemObject = collision.gameObject;
-        if (hasBubbleGroupParent() && collision.gameObject == bubbleGroupParent)
+        Debug.Log(gameObject.name + " entered " + collision.gameObject.name);
+        if (collision.CompareTag("Item"))
         {
-            withinParent = true;
-            Debug.Log("Entered parent!");
+            otherItemObjects.Add(collision.gameObject);
+        }
+        else if (collision.CompareTag("Group"))
+        {
+            otherGroupObjects.Add(collision.gameObject);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (hasBubbleGroupParent() && collision.gameObject == bubbleGroupParent)
+        Debug.Log(gameObject.name + " left " + collision.gameObject.name);
+        if (collision.CompareTag("Item"))
         {
-            withinParent = false;
-            Debug.Log("Left parent!");
+            otherItemObjects.Remove(collision.gameObject);
+        }
+        else if (collision.CompareTag("Group"))
+        {
+            otherGroupObjects.Remove(collision.gameObject);
         }
     }
 
@@ -118,6 +110,19 @@ public class BubbleItem : MonoBehaviour
     public bool hasBubbleGroupParent()
     {
         return (bubbleGroupParent != null);
+    }
+
+    public void startDragging()
+    {
+        offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        startPosition = transform.position;
+        dragging = true;
+    }
+
+    public void stopDragging()
+    {
+        dragging = false;
+        mouseUpCheck();
     }
 
 }

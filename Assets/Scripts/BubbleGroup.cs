@@ -27,18 +27,17 @@ public class BubbleGroup : MonoBehaviour
     {
         if (dragging)
         {
-            //transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
+            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
         }   
     }
 
-    private void OnMouseDown()
+    public void startDragging()
     {
-        //offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dragging = true;
-        Debug.Log("Clicked on a bubble!");
     }
 
-    private void OnMouseUp()
+    public void stopDragging()
     {
         dragging = false;
     }
@@ -94,18 +93,18 @@ public class BubbleGroup : MonoBehaviour
         }
         else if (nItems == 3)
         {
-            bubbleItemObjects[0].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(1.0f, -0.75f);
-            bubbleItemObjects[1].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(-1.0f, -0.75f);
-            bubbleItemObjects[2].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(0.0f, 1.25f);
+            bubbleItemObjects[0].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(0.75f, -0.5f);
+            bubbleItemObjects[1].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(-0.75f, -0.5f);
+            bubbleItemObjects[2].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(0.0f, 1.0f);
             gameObject.GetComponent<SpriteRenderer>().sprite = sprite1;
             gameObject.GetComponent<CircleCollider2D>().radius = 2.2f;
         }
         else if (nItems == 4)
         {
-            bubbleItemObjects[0].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(1.0f, -1.0f);
-            bubbleItemObjects[1].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(-1.0f, -1.0f);
-            bubbleItemObjects[2].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(1.0f, 1.0f);
-            bubbleItemObjects[3].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(-1.0f, 1.0f);
+            bubbleItemObjects[0].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(0.75f, -0.75f);
+            bubbleItemObjects[1].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(-0.75f, -0.75f);
+            bubbleItemObjects[2].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(0.75f, 0.75f);
+            bubbleItemObjects[3].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(-0.75f, 0.75f);
             gameObject.GetComponent<SpriteRenderer>().sprite = sprite2;
             gameObject.GetComponent<CircleCollider2D>().radius = 2.3f;
         }
