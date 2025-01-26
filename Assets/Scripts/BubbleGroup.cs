@@ -12,6 +12,10 @@ public class BubbleGroup : MonoBehaviour
     public Sprite sprite0;
     public Sprite sprite1;
     public Sprite sprite2;
+    public Sprite spritebg0;
+    public Sprite spritebg1;
+    public Sprite spritebg2;
+    public SpriteRenderer bubbleBack;
 
     private CategoryEnum.Category category;
     private bool dragging = false;
@@ -168,6 +172,7 @@ public class BubbleGroup : MonoBehaviour
             bubbleItemObjects[0].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(0.75f, 0.0f);
             bubbleItemObjects[1].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(-0.75f, 0.0f);
             gameObject.GetComponent<SpriteRenderer>().sprite = sprite0;
+            bubbleBack.sprite = spritebg0;
             gameObject.GetComponent<CircleCollider2D>().radius = 1.9f;
         }
         else if (nItems == 3)
@@ -176,6 +181,7 @@ public class BubbleGroup : MonoBehaviour
             bubbleItemObjects[1].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(-0.75f, -0.5f);
             bubbleItemObjects[2].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(0.0f, 1.0f);
             gameObject.GetComponent<SpriteRenderer>().sprite = sprite1;
+            bubbleBack.sprite = spritebg1;
             gameObject.GetComponent<CircleCollider2D>().radius = 2.2f;
         }
         else if (nItems == 4)
@@ -185,6 +191,7 @@ public class BubbleGroup : MonoBehaviour
             bubbleItemObjects[2].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(0.75f, 0.75f);
             bubbleItemObjects[3].GetComponent<RelativeJoint2D>().linearOffset = new Vector2(-0.75f, 0.75f);
             gameObject.GetComponent<SpriteRenderer>().sprite = sprite2;
+            bubbleBack.sprite = spritebg2;
             gameObject.GetComponent<CircleCollider2D>().radius = 2.3f;
         }
     }
