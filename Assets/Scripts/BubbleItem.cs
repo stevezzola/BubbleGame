@@ -74,10 +74,10 @@ public class BubbleItem : MonoBehaviour
                 }
                 else
                 {
-                    // Wrong item - pop bubble!
+                    // Wrong item - pop bubble! - Note: not fun without physics or animation
                     Debug.Log("Rejected!");
-                    BubbleGroup bubbleGroup = otherGroupObjects.Last().GetComponent<BubbleGroup>();
-                    bubbleGroup.removeAllItems();
+                    //BubbleGroup bubbleGroup = otherGroupObjects.Last().GetComponent<BubbleGroup>();
+                    //bubbleGroup.removeAllItems();
                 }
             }
         }

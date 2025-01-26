@@ -2,14 +2,24 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TitleScreen : MonoBehaviour
+public class MenuBar : MonoBehaviour
 {
     public Image speaker;
     public GameObject helpPanel;
     public Sprite soundOn;
     public Sprite soundOff;
 
-    private bool isSoundOn = true;
+    private void Start()
+    {
+        if (GameManager.Instance.isSoundOn)
+        {
+            speaker.sprite = soundOn;
+        }
+        else
+        {
+            speaker.sprite = soundOff;
+        }
+    }
 
     public void OnPlayButtonClick()
     {
@@ -23,8 +33,8 @@ public class TitleScreen : MonoBehaviour
 
     public void OnSoundButtonClick()
     {
-        isSoundOn = !isSoundOn;
-        if (isSoundOn)
+        GameManager.Instance.isSoundOn = !GameManager.Instance.isSoundOn;
+        if (GameManager.Instance.isSoundOn)
         {
             speaker.sprite = soundOn;
         }
