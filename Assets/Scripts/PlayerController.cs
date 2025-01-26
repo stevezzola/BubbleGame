@@ -4,12 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
 
     public List<CategoryEnum.Category> categoriesToDo;
     public TextMeshProUGUI winText;
+    public Image winImage;
+    public Button nextButton;
 
     private List<bool> isComplete;
     private GameObject selectedItem;
@@ -92,7 +95,14 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator WinTimer()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
+        winImage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        nextButton.gameObject.SetActive(true);
+    }
+
+    public void OnNextButtonClick()
+    {
         if (SceneManager.GetActiveScene().name == "Level1")
         {
             SceneManager.LoadScene("Level2");
@@ -105,6 +115,5 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("Title");
         }
-
     }
 }
