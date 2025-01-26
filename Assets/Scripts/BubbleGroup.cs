@@ -64,6 +64,12 @@ public class BubbleGroup : MonoBehaviour
         if (nItems == 4)
         {
             Debug.Log("Bubble completed!");
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            Debug.Log("FOUND! " + player.name);
+            if (player != null)
+            {
+                player.GetComponent<PlayerController>().reportComplete(category);
+            }
         }
     }
 

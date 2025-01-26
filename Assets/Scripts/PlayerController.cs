@@ -1,14 +1,23 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
 
+    public List<CategoryEnum.Category> categoriesToDo;
+
+    private List<bool> isComplete;
     private GameObject selectedItem;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        isComplete = new List<bool>();
+        foreach (CategoryEnum.Category catetory in categoriesToDo)
+        {
+            isComplete.Add(false);
+        }
     }
 
     // Update is called once per frame
@@ -55,6 +64,24 @@ public class PlayerController : MonoBehaviour
                 selectedItem.GetComponent<BubbleGroup>().stopDragging();
                 selectedItem = null;
             }
+        }
+    }
+
+    public void reportComplete(CategoryEnum.Category category)
+    {
+        int i = categoriesToDo.IndexOf(category);
+        isComplete[i] = true;
+        bool done = true;
+        foreach (bool b in isComplete)
+        {
+            if (!b)
+            {
+                done = false;
+            }
+        }
+        if (done)
+        {
+            Debug.Log("WINNER!!!");
         }
     }
 }
