@@ -93,6 +93,18 @@ public class PlayerController : MonoBehaviour
     IEnumerator WinTimer()
     {
         yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("Title");
+        if (SceneManager.GetActiveScene().name == "Level1")
+        {
+            SceneManager.LoadScene("Level2");
+        }
+        else if (SceneManager.GetActiveScene().name == "Level2")
+        {
+            SceneManager.LoadScene("Level3");
+        }
+        else if (SceneManager.GetActiveScene().name == "Level3")
+        {
+            SceneManager.LoadScene("Title");
+        }
+
     }
 }
