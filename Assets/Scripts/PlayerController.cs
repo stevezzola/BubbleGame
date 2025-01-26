@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (SceneManager.GetActiveScene().name == "Level3")
         {
-            SceneManager.LoadScene("Title");
+            SceneManager.LoadScene("EndScreen");
         }
     }
 }

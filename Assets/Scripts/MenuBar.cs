@@ -43,4 +43,9 @@ public class MenuBar : MonoBehaviour
             speaker.sprite = soundOff;
         }
     }
+
+    public void OnHomeButtonClick()
+    {
+        SceneManager.LoadScene("Title");
+    }
 }
