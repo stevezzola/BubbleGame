@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
 
     public List<CategoryEnum.Category> categoriesToDo;
+    public TextMeshProUGUI winText;
 
     private List<bool> isComplete;
     private GameObject selectedItem;
@@ -81,7 +85,14 @@ public class PlayerController : MonoBehaviour
         }
         if (done)
         {
-            Debug.Log("WINNER!!!");
+            winText.gameObject.SetActive(true);
+            StartCoroutine(WinTimer());
         }
+    }
+
+    IEnumerator WinTimer()
+    {
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene("Title");
     }
 }

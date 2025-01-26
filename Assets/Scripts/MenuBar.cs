@@ -11,7 +11,7 @@ public class MenuBar : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance.isSoundOn)
+        if (GameManager.Instance == null || GameManager.Instance.isSoundOn)
         {
             speaker.sprite = soundOn;
         }
