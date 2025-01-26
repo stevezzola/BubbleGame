@@ -17,12 +17,13 @@ public class BubbleGroup : MonoBehaviour
     private bool dragging = false;
     private Vector3 offset;
     private List<GameObject> bubbleItemObjects;
+    private List<GameObject> otherItemObjects;
     private int nItems = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        otherItemObjects = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -54,6 +55,46 @@ public class BubbleGroup : MonoBehaviour
     public void stopDragging()
     {
         dragging = false;
+        mouseUpCheck();
+    }
+
+    public void mouseUpCheck()
+    {
+        if (otherItemObjects.Count > 0)
+        {
+            BubbleItem otherBubbleItem = otherItemObjects.Last().GetComponent<BubbleItem>();
+            GameObject otherBubbleParent = otherBubbleItem.getBubbleGroupParent();
+            if (otherBubbleParent != null && otherBubbleParent != gameObject)
+            {
+                BubbleGroup otherBubbleGroup = otherBubbleParent.GetComponent<BubbleGroup>();
+                if (otherBubbleGroup.category == category)
+                {
+                    foreach (GameObject child in bubbleItemObjects)
+                    {
+                        otherBubbleGroup.addItem(child);
+                    }
+                    Destroy(gameObject);
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(gameObject.name + " entered " + collision.gameObject.name);
+        if (collision.CompareTag("Item"))
+        {
+            otherItemObjects.Add(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Debug.Log(gameObject.name + " left " + collision.gameObject.name);
+        if (collision.CompareTag("Item"))
+        {
+            otherItemObjects.Remove(collision.gameObject);
+        }
     }
 
     public void addItem(GameObject bubbleItemObject)

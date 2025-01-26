@@ -86,7 +86,7 @@ public class BubbleItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(gameObject.name + " entered " + collision.gameObject.name);
+        //Debug.Log(gameObject.name + " entered " + collision.gameObject.name);
         if (collision.CompareTag("Item"))
         {
             otherItemObjects.Add(collision.gameObject);
@@ -99,7 +99,7 @@ public class BubbleItem : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log(gameObject.name + " left " + collision.gameObject.name);
+        //Debug.Log(gameObject.name + " left " + collision.gameObject.name);
         if (collision.CompareTag("Item"))
         {
             otherItemObjects.Remove(collision.gameObject);
@@ -132,6 +132,11 @@ public class BubbleItem : MonoBehaviour
     public bool hasBubbleGroupParent()
     {
         return (bubbleGroupParent != null);
+    }
+
+    public GameObject getBubbleGroupParent()
+    {
+        return bubbleGroupParent;
     }
 
     public void startDragging()
