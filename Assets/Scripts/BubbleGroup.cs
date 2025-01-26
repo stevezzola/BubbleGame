@@ -2,6 +2,7 @@ using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -30,13 +31,24 @@ public class BubbleGroup : MonoBehaviour
         if (dragging)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
-        }   
+        }
+        if (transform.position.y > 10)
+        {
+            gameObject.GetComponent<Rigidbody2D>().simulated = false;
+            foreach (GameObject child in bubbleItemObjects)
+            {
+                child.GetComponent<Rigidbody2D>().simulated = false;
+            }
+        }
     }
 
     public void startDragging()
     {
-        offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        dragging = true;
+        if (nItems < 4)
+        {
+            offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            dragging = true;
+        }
     }
 
     public void stopDragging()
@@ -70,6 +82,8 @@ public class BubbleGroup : MonoBehaviour
             {
                 player.GetComponent<PlayerController>().reportComplete(category);
             }
+            gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            gameObject.GetComponent<Rigidbody2D>().gravityScale = -1;
         }
     }
 

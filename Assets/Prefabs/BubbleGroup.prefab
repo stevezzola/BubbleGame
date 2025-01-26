@@ -105,7 +105,6 @@ MonoBehaviour:
   sprite0: {fileID: 4165905764300836345, guid: 27b6b53f8f02b584a9eb3d21f60d2cf0, type: 3}
   sprite1: {fileID: 5936362224584513126, guid: 27b6b53f8f02b584a9eb3d21f60d2cf0, type: 3}
   sprite2: {fileID: -2400182908514641041, guid: 27b6b53f8f02b584a9eb3d21f60d2cf0, type: 3}
-  bubbleItemObjects: []
 --- !u!50 &7264557856509638650
 Rigidbody2D:
   serializedVersion: 5
@@ -121,7 +120,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
