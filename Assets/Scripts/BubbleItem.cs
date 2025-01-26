@@ -9,6 +9,7 @@ public class BubbleItem : MonoBehaviour
 {
     public GameObject bubbleGroupPrefab;
     public CategoryEnum.Category category;
+    public AudioClip[] pickupSound;
 
     private bool dragging = false;
     private Vector3 offset;
