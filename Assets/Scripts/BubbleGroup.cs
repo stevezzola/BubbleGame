@@ -35,7 +35,11 @@ public class BubbleGroup : MonoBehaviour
     {
         if (dragging)
         {
-            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
+            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
+            if (pos.x < 6.5 && pos.x > -6.5 && pos.y < 5.0 && pos.y > -5.0)
+            {
+                transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
+            }
         }
         if (transform.position.y > 10)
         {
