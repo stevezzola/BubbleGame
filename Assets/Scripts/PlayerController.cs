@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
             {
                 selectedItem.GetComponent<BubbleItem>().stopDragging();
                 selectedItem = null;
+                GameManager.Instance.PlayItemDeselect();
             }
             else if (selectedItem != null && selectedItem.CompareTag("Group"))
             {
@@ -103,6 +104,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnNextButtonClick()
     {
+       // GameManager.Instance.pressButton.Play();
         if (SceneManager.GetActiveScene().name == "Level1")
         {
             SceneManager.LoadScene("Level2");

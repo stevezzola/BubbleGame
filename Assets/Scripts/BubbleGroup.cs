@@ -127,6 +127,7 @@ public class BubbleGroup : MonoBehaviour
             Debug.Log("Bubble completed!");
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             Debug.Log("FOUND! " + player.name);
+            GameManager.Instance.PlayBubbleComplete();
             if (player != null)
             {
                 player.GetComponent<PlayerController>().reportComplete(category);
@@ -151,6 +152,7 @@ public class BubbleGroup : MonoBehaviour
                     nItems -= 1;
                 }
                 Destroy(gameObject);
+                GameManager.Instance.PlayBubblePop();
             }
             else
             {
@@ -167,6 +169,7 @@ public class BubbleGroup : MonoBehaviour
             nItems -= 1;
         }
         Destroy(gameObject);
+        GameManager.Instance.PlayBubblePop();
     }
 
     public void readjustItems()
@@ -178,6 +181,7 @@ public class BubbleGroup : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().sprite = sprite0;
             bubbleBack.sprite = spritebg0;
             gameObject.GetComponent<CircleCollider2D>().radius = 1.9f;
+            GameManager.Instance.PlayBubbleForm2();
         }
         else if (nItems == 3)
         {
@@ -187,6 +191,7 @@ public class BubbleGroup : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().sprite = sprite1;
             bubbleBack.sprite = spritebg1;
             gameObject.GetComponent<CircleCollider2D>().radius = 2.2f;
+            GameManager.Instance.PlayBubbleForm3();
         }
         else if (nItems == 4)
         {
@@ -197,6 +202,7 @@ public class BubbleGroup : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().sprite = sprite2;
             bubbleBack.sprite = spritebg2;
             gameObject.GetComponent<CircleCollider2D>().radius = 2.3f;
+            GameManager.Instance.PlayBubbleForm4();
         }
     }
 
