@@ -10,13 +10,14 @@ public class GameManager : MonoBehaviour
     public AudioSource bubbleComplete;
     public AudioSource buttonPressSource;
     public AudioSource bubbleSoundSource;
-    public AudioSource itemSoundSource;
-    public List<AudioClip> buttonPress;
-    public List<AudioClip> bubbleForm2;
-    public List<AudioClip> bubbleForm3;
-    public List<AudioClip> bubbleForm4;
-    public List<AudioClip> bubblePop;
-    public List<AudioClip> itemSelect;
+    public AudioSource itemSelectSource;
+    public AudioSource itemDeselectSource;
+    public AudioSource levelComplete;
+    public AudioClip[] buttonPress;
+    public AudioClip[] bubbleForm2;
+    public AudioClip[] bubbleForm3;
+    public AudioClip[] bubbleForm4;
+    public AudioClip[] bubblePop;
     public AudioClip itemDeselect;
 
     private void Awake()
@@ -37,37 +38,51 @@ public class GameManager : MonoBehaviour
 
     public void PlayButtonPress()
     {
-        buttonPressSource.clip = buttonPress[Random.Range(0, buttonPress.Count)];
+        buttonPressSource.clip = buttonPress[Random.Range(0, buttonPress.Length)];
         buttonPressSource.Play();
     }
 
     public void PlayBubbleForm2()
     {
-        bubbleSoundSource.clip = bubbleForm2[Random.Range(0, bubbleForm2.Count)];
+        bubbleSoundSource.clip = bubbleForm2[Random.Range(0, bubbleForm2.Length)];
         bubbleSoundSource.Play();
     }
 
     public void PlayBubbleForm3()
     {
-        bubbleSoundSource.clip = bubbleForm3[Random.Range(0, bubbleForm3.Count)];
+        bubbleSoundSource.clip = bubbleForm3[Random.Range(0, bubbleForm3.Length)];
         bubbleSoundSource.Play();
     }
 
     public void PlayBubbleForm4()
     {
-        bubbleSoundSource.clip = bubbleForm4[Random.Range(0, bubbleForm4.Count)];
+        bubbleSoundSource.clip = bubbleForm4[Random.Range(0, bubbleForm4.Length)];
         bubbleSoundSource.Play();
     }
 
     public void PlayBubblePop()
     {
-        bubbleSoundSource.clip = bubblePop[Random.Range(0, bubblePop.Count)];
+        bubbleSoundSource.clip = bubblePop[Random.Range(0, bubblePop.Length)];
         bubbleSoundSource.Play();
+    }
+
+    public void PlayItemSelect(AudioClip clip)
+    {
+        itemSelectSource.clip = clip;
+        itemSelectSource.Play();
     }
 
     public void PlayItemDeselect()
     {
-        itemSoundSource.clip = itemDeselect;
-        itemSoundSource.Play();
+        itemDeselectSource.clip = itemDeselect;
+        itemDeselectSource.Play();
+    }
+
+    public void PlayLevelComplete()
+    {
+        AudioSource mainSource = Instance.GetComponent<AudioSource>();
+        mainSource.Stop();
+        levelComplete.Play();
+        mainSource.PlayDelayed(0.536f * 10);
     }
 }

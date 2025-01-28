@@ -46,7 +46,7 @@ public class MenuBar : MonoBehaviour
 
     public void OnHomeButtonClick()
     {
-       // GameManager.Instance.pressButton.Play();
         SceneManager.LoadScene("Title");
+        GameManager.Instance.PlayButtonPress();
     }
 }

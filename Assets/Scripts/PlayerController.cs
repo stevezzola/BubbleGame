@@ -89,22 +89,23 @@ public class PlayerController : MonoBehaviour
         }
         if (done)
         {
-            winText.gameObject.SetActive(true);
             StartCoroutine(WinTimer());
+            GameManager.Instance.PlayLevelComplete();
         }
     }
 
     IEnumerator WinTimer()
     {
-        yield return new WaitForSeconds(2);
+        winText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.536f * 4);
         winImage.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.536f * 2);
         nextButton.gameObject.SetActive(true);
+        GameManager.Instance.PlayBubblePop();
     }
 
     public void OnNextButtonClick()
     {
-       // GameManager.Instance.pressButton.Play();
         if (SceneManager.GetActiveScene().name == "Level1")
         {
             SceneManager.LoadScene("Level2");
@@ -117,5 +118,6 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("EndScreen");
         }
+        GameManager.Instance.PlayButtonPress();
     }
 }

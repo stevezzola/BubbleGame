@@ -148,6 +148,7 @@ public class BubbleItem : MonoBehaviour
         offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         startPosition = transform.position;
         dragging = true;
+        GameManager.Instance.PlayItemSelect(pickupSound[0]);
     }
 
     public void stopDragging()
