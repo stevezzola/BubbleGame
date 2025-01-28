@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,12 +12,14 @@ public class MenuBar : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance == null || GameManager.Instance.isSoundOn)
+        if (GameManager.Instance.isSoundOn)
         {
+            GameManager.Instance.ToggleSound(true);
             speaker.sprite = soundOn;
         }
         else
         {
+            GameManager.Instance.ToggleSound(false);
             speaker.sprite = soundOff;
         }
     }
@@ -33,14 +36,15 @@ public class MenuBar : MonoBehaviour
 
     public void OnSoundButtonClick()
     {
-        GameManager.Instance.isSoundOn = !GameManager.Instance.isSoundOn;
         if (GameManager.Instance.isSoundOn)
         {
-            speaker.sprite = soundOn;
+            GameManager.Instance.ToggleSound(false);
+            speaker.sprite = soundOff;
         }
         else
         {
-            speaker.sprite = soundOff;
+            GameManager.Instance.ToggleSound(true);
+            speaker.sprite = soundOn;
         }
     }
 

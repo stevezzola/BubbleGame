@@ -1,12 +1,15 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     public bool isSoundOn = true;
+    public AudioMixerSnapshot snapshotOn;
+    public AudioMixerSnapshot snapshotOff;
     public AudioSource bubbleComplete;
     public AudioSource buttonPressSource;
     public AudioSource bubbleSoundSource;
@@ -84,5 +87,20 @@ public class GameManager : MonoBehaviour
         mainSource.Stop();
         levelComplete.Play();
         mainSource.PlayDelayed(0.536f * 10);
+    }
+
+    public void ToggleSound(bool soundOn)
+    {
+        if (soundOn)
+        {
+            snapshotOn.TransitionTo(0.0f);
+            isSoundOn = true;
+        }
+        else
+        {
+            snapshotOff.TransitionTo(0.0f);
+            isSoundOn = false;
+        }
+        
     }
 }

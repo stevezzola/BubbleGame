@@ -1459,6 +1459,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSoundOn: 1
+  snapshotOn: {fileID: 24500006, guid: 45b85e8e245916d498b641378acc4dce, type: 2}
+  snapshotOff: {fileID: -4023894366809734113, guid: 45b85e8e245916d498b641378acc4dce, type: 2}
   bubbleComplete: {fileID: 564605466}
   buttonPressSource: {fileID: 866190526}
   bubbleSoundSource: {fileID: 302554127}
