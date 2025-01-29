@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
         winText.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.536f * 4);
         winImage.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.536f * 2);
+        yield return new WaitForSeconds(0.536f * 3f);
         nextButton.gameObject.SetActive(true);
         GameManager.Instance.PlayBubblePop();
     }

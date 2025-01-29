@@ -2,6 +2,8 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Audio;
+using System.Collections;
+using static UnityEngine.SpriteMask;
 
 public class GameManager : MonoBehaviour
 {
@@ -83,10 +85,16 @@ public class GameManager : MonoBehaviour
 
     public void PlayLevelComplete()
     {
+        StartCoroutine(RestartMusic());
+        levelComplete.Play();
+    }
+
+    IEnumerator RestartMusic()
+    {
         AudioSource mainSource = Instance.GetComponent<AudioSource>();
         mainSource.Stop();
-        levelComplete.Play();
-        mainSource.PlayDelayed(0.536f * 10);
+        yield return new WaitForSeconds(0.536f * 10);
+        mainSource.Play();
     }
 
     public void ToggleSound(bool soundOn)
